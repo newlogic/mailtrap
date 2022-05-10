@@ -1,35 +1,24 @@
 # Mailtrap Docker Image
 
-Catch all mail and display it in roundcube interface.
+Docker image to catch all emails and display them in a webmail interface. For development purposes only.
 
-# Usage
+## Usage in Docker Compose
 
-## Start Mailtrap
+Add the following service to your `docker-compose.yml`:
 
-    $ docker run -d --name=mailtrap -p 80:80 eaudeweb/mailtrap
+```
+  mail:
+    image: newlogic/mailtrap
+    restart: unless-stopped
+    ports:
+     - 8080:80
+```
 
-## Send email
+This will enable services to:
+ - send emails by connecting to the SMTP server with hostname `mail` and port `25`;
+ - receive emails by connecting to the IMAP server with hostname `mail`, port `143`, username `mailtrap`, and password `mailtrap`.
 
-    $ docker run -it --link mailtrap alpine:3.6 sh
-
-      $ telnet mailtrap 25
-      ehlo example.com
-      mail from: me@example.com
-      rcpt to: you@example.com
-      data
-      Subject: Hello from me
-      Hello You,
-
-      This is a test.
-
-      Cheers,
-      Me
-      .
-      quit
-
-## See email via Mailtrap Web UI:
-
-* http://localhost
+Webmail interface is accessible at the following URL: http://localhost:8080
 
 ## Default login:
 
@@ -45,11 +34,8 @@ Set environment variables
 * `MT_MAILBOX_LIMIT` - mailbox limit in bytes, default 51200000
 * `MT_MESSAGE_LIMIT` - message limit in bytes, default 10240000
 
-and recreate the container.
-
-## Testing the image locally
+## Build instructions
 
 ```
-sudo docker build -t eaudeweb/mailtrap:test .
-sudo docker-compose up
+docker build -t newlogic/mailtrap .
 ```
