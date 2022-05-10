@@ -8,7 +8,7 @@ Add the following service to your `docker-compose.yml`:
 
 ```
   mail:
-    image: newlogic/mailtrap
+    image: newlogic42/mailtrap
     restart: unless-stopped
     ports:
      - 8080:80
@@ -37,5 +37,5 @@ Set environment variables
 ## Build instructions
 
 ```
-docker build -t newlogic/mailtrap .
+docker build -t newlogic42/mailtrap .
 ```
